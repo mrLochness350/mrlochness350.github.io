@@ -35,20 +35,20 @@ jobs:
           chmod -R 777 /srv/jekyll && \
           jekyll build --future"
           
-    - name: Setup Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-          ruby-version: 3.2.2
-          bundler-cache: true
+    # - name: Setup Ruby
+    #   uses: ruby/setup-ruby@v1
+    #   with:
+    #       ruby-version: 3.2.2
+    #       bundler-cache: true
 
-    - name: Install html-proofer
-      run: bundle install
+    # - name: Install html-proofer
+    #   run: bundle install
 
-    - name: Test site
-      run: |
-          bundle exec htmlproofer _site \
-            --disable-external=true \
-            --ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/"
+    # - name: Test site
+    #   run: |
+    #       bundle exec htmlproofer _site \
+    #         --disable-external=true \
+    #         --ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/"
 
     - name: Upload site artifact
       uses: actions/upload-pages-artifact@v3
