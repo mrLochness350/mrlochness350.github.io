@@ -25,9 +25,16 @@ jobs:
     - name: Build the site in the jekyll/builder container
       run: |
         docker run \
-        -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-        jekyll/builder:latest /bin/bash -c "echo 'HERE'; git config --global --add safe.directory /srv/jekyll && chmod -R 777 /srv/jekyll && jekyll build --future"
-
+        --entrypoint /bin/bash \
+        -v ${{ github.workspace }}:/srv/jekyll \
+        -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
+        jekyll/builder:latest -c "\
+          echo 'HERE' && \
+          git config --global --add safe.directory /srv/jekyll && \
+          echo '[!] Added /srv/jekyll to safe.directory' && \
+          chmod -R 777 /srv/jekyll && \
+          jekyll build --future"
+          
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
       with:
